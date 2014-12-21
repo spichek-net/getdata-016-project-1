@@ -3,23 +3,19 @@
 
   The script in this repo can be used to clean-up data gathered in **Human Activity Recognition Using Smartphones Data Set**
 
-  The R script in this reo can be invoked from command line using ```bash
-R -f run_analysis.R
-```
+  The R script in this reo can be invoked from command line using `R -f run_analysis.R`
 
-  Alternatively it can be sourced using ```R
-source("run_analysis.R")
-```
-into R-studio or command line R interpreter.
 
-  After script completion environment will contain two tidy data sets named **all** and **averages**.
-  You'll also get **averages.txt** file with the **averages** data set.
+  Alternatively it can be sourced into R-studio or command line R interpreter via `source("run_analysis.R")`.
 
-### Data set **all**
+  After script completion environment will contain two tidy data sets named `all` and `averages`.
+  You'll also get `averages.txt` file with the `averages` data set.
 
-  It is is a union of two data subsets, **test** and **training**
+### Data set `all`
 
-  Each of the subsets was produced by application of **readPart** function which did following:
+  It is is a union of two data subsets, `test` and `training`
+
+  Each of the subsets was produced by application of `readPart` function which did following:
 1. Read activity labels from corresponding source file into 
 2. Read measurements' names from corresponding source file
 3. Beautify measurements' names by application of several regular expression substitution
@@ -30,16 +26,11 @@ into R-studio or command line R interpreter.
 7. Join combined data set with activity labels' data, and select only needed columns in nice order
 8. This tidy data subset
 
-  Union of **test** and **training** data subsets provides **all** tidy data set
+  Union of `test` and `*training` data subsets provides `all` tidy data set
 
-### Data set **averages**
+### Data set `averages`
 
-To produce the data set **summarize** and **group_by** functions are used as follows ```R
-summarize(group_by(all,Subject,Activity),Mean_of-measure1=mean(measure1),..)
-```
-Since there are many measures and computing all of them explicitly would require a lot of typing, be error prone, difficult to alter, and unreadable.
-The string containing complete statement is generated programmatically, and then evaluated by using ```R
-eval(parse(...))
-```
+  To produce the data set `summarize` and `group_by` functions are used as follows `summarize(group_by(all,Subject,Activity),Mean_of-measure1=mean(measure1),..)`
+  Since there are many measures and computing all of them explicitly would require a lot of typing, be error prone, difficult to alter, and unreadable. The string containing complete statement is generated programmatically, and then evaluated by using `eval(parse(...))`
 
-The data set is then written to **averages.txt** file using **write.table()** function
+  The data set is then written to **averages.txt** file using **write.table()** function
