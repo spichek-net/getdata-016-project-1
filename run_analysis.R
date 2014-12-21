@@ -2,7 +2,7 @@ library(dplyr)
 
 sourceURL <- "http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
-tmpFile <- F#tempfile(); download.file(sourceURL ,tmpFile)
+tmpFile <- tempfile(); download.file(sourceURL ,tmpFile)
 
 readFile <- function(fileName,...) {
   if(tmpFile == FALSE )
@@ -54,3 +54,5 @@ metricNames <- colnames(all)[3:81]
 meanExpressions <- paste(collapse=", ",gsub("(.*)","\"Mean_of_\\1\"=mean(`\\1`)",metricNames))
 
 averages <- eval(parse(text=paste(sep="","summarize(group_by(all,Subject,Activity),",meanExpressions,")")))
+
+write.table(averages,file="averages.txt", row.name=FALSE)
