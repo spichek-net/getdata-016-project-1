@@ -37,4 +37,4 @@
   `summarize(group_by(all,Subject,Activity),Mean_of_measure1=mean(measure1),..)`  
   Since there are many measures and computing all of them explicitly would require a lot of typing, be error prone, difficult to alter, and unreadable. The string containing complete statement is generated programmatically, and then evaluated by using `eval(parse(...))`
 
-  The data set is then written to **averages.txt** file using **write.table()** function
+  The data set is then written to `averages.txt` file using `write.table()` function
