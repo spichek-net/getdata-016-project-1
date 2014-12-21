@@ -12,6 +12,7 @@ Allowed values:
 * SITTING  
 * STANDING  
 * LAYING  
+
 ### tBodyAcc.mean.X
 Mean body linear acceleration in X direction  
 **Type: Floating point**  
