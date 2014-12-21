@@ -2,7 +2,7 @@ library(dplyr)
 
 sourceURL <- "http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
-tmpFile <- tempfile(); download.file(sourceURL ,tmpFile)
+tmpFile <- F#tempfile(); download.file(sourceURL ,tmpFile)
 
 readFile <- function(fileName,...) {
   if(tmpFile == FALSE )
@@ -22,10 +22,14 @@ readPart <- function(partName) {
   activityLabels <- readFile(labelsFile,col.names = c("Activity ID","Activity"))
 
   allHeaders <- readFile(headersFile,col.names = c("num","label"))
-  
-  allMetrics <- readFile(mainDataFile,col.names = allHeaders[,2])
 
-  metrics <- allMetrics[,grepl("mean|std",allHeaders$label)]
+  niceHeaders <- gsub("\\.\\.",".",
+                      gsub("\\(\\)|-",".",
+                           allHeaders$label))
+  
+  allMetrics <- readFile(mainDataFile,col.names = niceHeaders)
+
+  metrics <- allMetrics[,grepl("mean|std",niceHeaders)]
   
   subjects <- readFile(subjectsFile,col.names = c("Subject"))
   
@@ -44,7 +48,7 @@ if(tmpFile != FALSE) unlink(tmpFile)
 all <- rbind(test,train)
 
 metricNames <- colnames(all)[3:81]
-meanExpressions <- paste(collapse=", ",gsub("(.*)","\"\\1-mean()\"=mean(`\\1`)",metricNames))
+meanExpressions <- paste(collapse=", ",gsub("(.*)","\"Mean_of_\\1\"=mean(`\\1`)",metricNames))
 
 averages <- eval(parse(text=paste(sep="","summarize(group_by(all,Subject,Activity),",meanExpressions,")")))
 
